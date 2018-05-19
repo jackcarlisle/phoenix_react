@@ -13,14 +13,16 @@ defmodule PhoenixReactWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api", PhoenixReactWeb do
+    pipe_through :api
+
+    resources "/languages", LanguageController, except: [:new, :edit]
+  end
+
   scope "/", PhoenixReactWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/*path", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", PhoenixReactWeb do
-  #   pipe_through :api
-  # end
 end
